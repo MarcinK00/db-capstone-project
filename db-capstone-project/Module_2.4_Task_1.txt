@@ -1,0 +1,19 @@
+DELIMITER //
+
+CREATE PROCEDURE AddBooking(
+    IN book_id INT,
+    IN customer_id INT,
+    IN book_date DATE,
+    IN table_no INT
+)
+BEGIN
+
+    INSERT INTO Booking (BookingID, BookingDate, TableNumber, CustomerID)
+    VALUES (book_id, book_date, table_no, customer_id);
+    SELECT 'New booking added' AS Confirmation;
+
+END //
+
+DELIMITER ;
+
+CALL AddBooking(9, 3, 4, '2022-12-30');

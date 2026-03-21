@@ -1,0 +1,9 @@
+SELECT Customers.customerID AS CustomerID, Customers.customerName AS FullName,
+Orders.orderID AS OrderID, Orders.totalCost AS Cost,
+Menus.menuName AS MenuName, Items.courseName AS CourseName
+FROM Customers
+JOIN Orders ON Customers.customerID = Orders.customerID
+JOIN Menus ON Orders.menuID = Menus.menuID
+JOIN Items ON Menus.menuItemID = Items.itemID
+WHERE Orders.totalCost > 150
+ORDER BY Orders.totalCost ASC;

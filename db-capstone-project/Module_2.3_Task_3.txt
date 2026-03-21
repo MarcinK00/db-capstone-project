@@ -1,0 +1,33 @@
+DELIMITER //
+
+CREATE PROCEDURE AddValidBooking(
+    IN book_id INT,
+    IN book_date DATE,
+    IN table_no INT,
+    IN customer_id INT
+)
+BEGIN
+    START TRANSACTION;
+
+    DECLARE book_count INT;
+
+    SELECT COUNT(*)
+    INTO book_count
+    FROM Booking
+    WHERE BookingDate = book_date
+      AND TableNumber = table_no;
+
+    IF book_count > 0 THEN
+	ROLLBACK;
+        SELECT CONCAT('Table ',table_no,' is already booked - booking cancelled') AS "Booking status";
+    ELSE
+        INSERT INTO Booking (BookingID, BookingDate, TableNumber, CustomerID)
+        VALUES (book_id, book_date, table_no, customer_id);
+	COMMIT;
+        SELECT 'Booking successful.' AS "Booking status";
+    END IF;
+END //
+
+DELIMITER ;
+
+CALL AddValidBooking(5, '2022-11-12', 3, 2);

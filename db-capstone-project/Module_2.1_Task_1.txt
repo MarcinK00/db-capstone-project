@@ -1,0 +1,6 @@
+use littlelemondb_next_module;
+CREATE VIEW OrdersView as
+SELECT orderID, quantity, totalCost as cost
+FROM Orders
+WHERE quantity>2;
+SELECT * from OrdersView;
